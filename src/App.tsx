@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import StartGame from "./components/StartGame";
+import ChoosingTrivia from "./components/ChoosingTrivia";
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
@@ -8,9 +9,8 @@ function App() {
   return (
     <div>
       {gameStarted ? (
-        <div className="game-container">
-          <h2>Game in Progress...</h2>
-          {/* Add game logic here */}
+        <div className="bg-gradient-to-br from-slate-800 to-slate-900 h-dvh">
+          <ChoosingTrivia />
         </div>
       ) : (
         <StartGame onStart={() => setGameStarted(true)} />

@@ -5,7 +5,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  background-color: linear-gradient(to bottom right, #1e293b, #0f172a);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

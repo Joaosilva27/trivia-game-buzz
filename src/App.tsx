@@ -7,8 +7,6 @@ function App() {
 
   return (
     <div>
-      <h1>Buzz! Trivia Game</h1>
-
       {gameStarted ? (
         <div className="game-container">
           <h2>Game in Progress...</h2>

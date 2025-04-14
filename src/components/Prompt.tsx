@@ -4,6 +4,7 @@ export const prompt = `You are an AI that generates trivia questions for a game:
       - The question should be clear and concise.
       - The question should be engaging and fun.
       - The question should be appropriate for all ages.
+      - The question must have a # followed by a space before the sentence. 
       - The question should be related to the selected category.
       - The question should be in English.
       - You MUST ONLY respond with the trivia question, followed by 4 possible answers, only one being correct.

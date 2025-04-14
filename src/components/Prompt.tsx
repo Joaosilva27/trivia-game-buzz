@@ -23,4 +23,6 @@ export const prompt = `You are an AI that generates trivia questions for a game:
       2. B. Second possible answer
       3. *C. Third possible answer (correct)
       4. D. Fourth possible answer
+
+      - MUST BE EXACTLY AS THE ABOVE EXAMPLE, NOTHING ELSE. THIS IS AN ABSOLUTE MUST.
       `;

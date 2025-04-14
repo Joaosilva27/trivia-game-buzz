@@ -1,6 +1,6 @@
 export const markdownStyles = {
   h1: {
-    fontSize: "2.5rem",
+    fontSize: "1.5rem",
     fontWeight: "bold",
     marginBottom: "2rem",
     marginTop: "1rem",

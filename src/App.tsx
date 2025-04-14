@@ -16,6 +16,7 @@ function App() {
   const [triviaQuestion, setTriviaQuestion] = useState<string | undefined>("");
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState<boolean>(false);
+  const [userScore, setUserScore] = useState<number>(0);
 
   const ai = new GoogleGenAI({
     apiKey: import.meta.env.VITE_GOOGLE_GEMINI_API_KEY,
@@ -52,6 +53,10 @@ function App() {
 
     setSelectedAnswer(content);
     setShowResult(true);
+
+    if (isAnswerCorrect(content)) {
+      setUserScore(prevScore => prevScore + 1);
+    }
 
     // Log whether the answer is correct
     console.log("Selected answer:", content, isAnswerCorrect(content) ? "(CORRECT)" : "(INCORRECT)");
@@ -145,12 +150,13 @@ function App() {
                       <div className='flex justify-center mt-6'>
                         <button
                           onClick={getTriviaQuestion}
-                          className='bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-200 shadow-md'
+                          className='bg-indigo-600 hover:bg-indigo-700 text-white mb-2 font-bold py-2 px-6 rounded-lg transition-all duration-200 shadow-md'
                         >
                           Next Question
                         </button>
                       </div>
                     )}
+                    <span className='underline text-lg'>Your points: {userScore}</span>
                   </>
                 ) : (
                   <div className='flex justify-center items-center h-40'>

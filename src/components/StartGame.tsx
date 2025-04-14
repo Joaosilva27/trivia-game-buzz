@@ -16,7 +16,6 @@ const StartGame: React.FC<StartGameProps> = ({ onStart }) => {
         </h1>
 
         <div className='relative mb-8'>
-          <div className='absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-70 rounded-xl'></div>
           <img src={LayingBuzzImage} alt='Buzz Character' className='relative z-10 mx-auto h-80' />
         </div>
 

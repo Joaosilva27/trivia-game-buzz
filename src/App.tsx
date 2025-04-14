@@ -17,6 +17,7 @@ function App() {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState<boolean>(false);
   const [userScore, setUserScore] = useState<number>(0);
+  const [chatHistory, setChatHistory] = useState<Array<{ role: string; parts: Array<{ text: string }> }>>([]);
 
   const ai = new GoogleGenAI({
     apiKey: import.meta.env.VITE_GOOGLE_GEMINI_API_KEY,
@@ -27,13 +28,55 @@ function App() {
     setSelectedAnswer(null);
     setShowResult(false);
 
-    const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash",
-      contents: prompt + selectedCategory,
+    const newChatHistory = [...chatHistory];
+
+    newChatHistory.push({
+      role: "user",
+      parts: [{ text: prompt + " Category: " + selectedCategory }],
     });
-    console.log(response.text);
-    setTriviaQuestion(response.text);
-    setIsTriviaQuestionGenerated(true);
+
+    try {
+      const response = await ai.models.generateContent({
+        model: "gemini-2.0-flash",
+        contents: newChatHistory,
+      });
+
+      newChatHistory.push({
+        role: "model",
+        parts: [{ text: response.text }],
+      });
+
+      setChatHistory(newChatHistory);
+      setTriviaQuestion(response.text);
+      setIsTriviaQuestionGenerated(true);
+    } catch (error) {
+      console.error("Error with chat history:", error);
+
+      // Fallback to a simple request if there's an error
+      const simpleResponse = await ai.models.generateContent({
+        model: "gemini-2.0-flash",
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: prompt + " Category: " + selectedCategory }],
+          },
+        ],
+      });
+
+      setChatHistory([
+        {
+          role: "user",
+          parts: [{ text: prompt + " Category: " + selectedCategory }],
+        },
+        {
+          role: "model",
+          parts: [{ text: simpleResponse.text }],
+        },
+      ]);
+
+      setTriviaQuestion(simpleResponse.text);
+      setIsTriviaQuestionGenerated(true);
+    }
   }
 
   const handleCategorySelect = (category: string) => {
@@ -49,7 +92,7 @@ function App() {
   }, [selectedCategory, isCategorySelected]);
 
   const handleAnswerSelection = (content: string) => {
-    if (selectedAnswer || showResult) return; // Prevent multiple selections
+    if (selectedAnswer || showResult) return;
 
     setSelectedAnswer(content);
     setShowResult(true);
@@ -58,7 +101,6 @@ function App() {
       setUserScore(prevScore => prevScore + 1);
     }
 
-    // Log whether the answer is correct
     console.log("Selected answer:", content, isAnswerCorrect(content) ? "(CORRECT)" : "(INCORRECT)");
   };
 
@@ -78,18 +120,18 @@ function App() {
         ...markdownStyles.li,
         backgroundColor: showResultHighlight
           ? isCorrect
-            ? "rgba(16, 185, 129, 0.3)" // Green background for correct
+            ? "rgba(16, 185, 129, 0.3)"
             : isSelected
             ? "rgba(239, 68, 68, 0.3)"
-            : "rgba(15, 23, 42, 0.6)" // Red for wrong selection
-          : "rgba(15, 23, 42, 0.6)", // Default
+            : "rgba(15, 23, 42, 0.6)"
+          : "rgba(15, 23, 42, 0.6)",
         border: showResultHighlight
           ? isCorrect
-            ? "1px solid rgba(16, 185, 129, 0.6)" // Green border for correct
+            ? "1px solid rgba(16, 185, 129, 0.6)"
             : isSelected
             ? "1px solid rgba(239, 68, 68, 0.6)"
-            : "1px solid rgba(148, 163, 184, 0.2)" // Red for wrong selection
-          : "1px solid rgba(148, 163, 184, 0.2)", // Default
+            : "1px solid rgba(148, 163, 184, 0.2)"
+          : "1px solid rgba(148, 163, 184, 0.2)",
       };
 
       return (
@@ -107,7 +149,7 @@ function App() {
                 right: "1rem",
                 top: "50%",
                 transform: "translateY(-50%)",
-                color: "#10b981", // Green
+                color: "#10b981",
                 fontWeight: "bold",
               }}
             >
@@ -121,7 +163,7 @@ function App() {
                 right: "1rem",
                 top: "50%",
                 transform: "translateY(-50%)",
-                color: "#ef4444", // Red
+                color: "#ef4444",
                 fontWeight: "bold",
               }}
             >

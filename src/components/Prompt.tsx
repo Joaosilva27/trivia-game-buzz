@@ -25,4 +25,5 @@ export const prompt = `You are an AI that generates trivia questions for a game:
       4. D. Fourth possible answer
 
       - MUST BE EXACTLY AS THE ABOVE EXAMPLE, NOTHING ELSE. THIS IS AN ABSOLUTE MUST.
+      - IMPORTANT!! IF I HAVE A CHAT HISTORY WITH YOU, YOU CANNOT ASK A DUPLICATE QUESTION, EACH QUESTION MUST BE UNIQUE AND DIFFERENT FROM THE LAST ONE.
       `;

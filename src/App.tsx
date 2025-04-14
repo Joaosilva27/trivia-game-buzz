@@ -57,7 +57,7 @@ function App() {
       {gameStarted ? (
         <div className='bg-gradient-to-br from-slate-800 to-slate-900 h-dvh'>
           {isCategorySelected ? (
-            <div className='text-white pt-2 px-4'>
+            <div className='text-white pt-2 px-4 h-dvh flex justify-center items-center flex-col'>
               {isTriviaQuestionGenerated ? (
                 <Markdown remarkPlugins={[remarkGfm]} components={components}>
                   {triviaQuestion}

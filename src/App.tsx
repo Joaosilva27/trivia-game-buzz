@@ -99,6 +99,8 @@ function App() {
 
     if (isAnswerCorrect(content)) {
       setUserScore(prevScore => prevScore + 1);
+    } else if (userScore > 0) {
+      setUserScore(prevScore => prevScore - 1);
     }
 
     console.log("Selected answer:", content, isAnswerCorrect(content) ? "(CORRECT)" : "(INCORRECT)");

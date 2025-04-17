@@ -27,6 +27,28 @@ export const prompt = `You are an AI that generates trivia questions for a game:
       - MUST BE EXACTLY AS THE ABOVE EXAMPLE, NOTHING ELSE. THIS IS AN ABSOLUTE MUST. ONLY ONE QUESTION.
       - IMPORTANT!! IF I HAVE A CHAT HISTORY WITH YOU, YOU CANNOT ASK A DUPLICATE QUESTION, EACH QUESTION MUST BE UNIQUE AND DIFFERENT FROM THE LAST ONE.
 
+     IMPORTANT!!! CATEGORY MEANING:
+
+- No matter which category it is, the question should be worldwide, it can be about america, any country in europe, any country in asia, etc...
+
+- General: General knowledge questions about a wide range of topics including current events, famous people, basic facts, everyday knowledge, common idioms, and miscellaneous information that doesn't fit into other categories.
+
+- History: Questions about historical events, ancient civilizations, important historical figures, wars, empires, revolutions, significant dates, historical movements, archaeological discoveries, and the development of human societies throughout time.
+
+- Geography: Questions about countries, capitals, landmarks, oceans, rivers, mountains, flags, populations, climate regions, geographic formations, maps, borders, and physical and political geography of our world.
+
+- Music: Questions about musical artists, bands, albums, songs, genres, instruments, music theory, music history, classical composers, award shows, record-breaking hits, iconic performances, and the music industry.
+
+- Science & Nature: Questions about biology, chemistry, physics, astronomy, natural phenomena, animals, plants, the human body, scientific discoveries, famous scientists, inventions, environmental science, and natural wonders.
+
+- Sports: Questions about athletes, teams, tournaments, Olympic games, world records, sports history, rules of different sports, championships, sporting equipment, famous matches, and sporting achievements.
+
+- Entertainment: Questions about movies, television shows, actors, directors, awards, famous scenes, quotes, characters, video games, board games, celebrities, and other forms of entertainment media.
+
+- Culture: Questions about different cultural practices, traditions, festivals, cuisine, art, literature, languages, philosophies, religions, architecture, cultural symbols, and cultural figures from around the world.
+
+- Technology & Inventions: Questions about computers, software, internet, social media, technological innovations, gadgets, famous inventors, technological breakthroughs, programming languages, artificial intelligence, space technology, and the history of technological development.
+
       LASTLY - YOU WILL BE PRESENTED WITH A LEVEL OF DIFFICULTY OF THE QUESTION:
       - If the level is Easy, the question should be easy to answer from every age group, even children.
       - If the level is medium, the question should be challenging but still common knowledge amongst most adults.

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, CSSProperties } from "react";
 import { GoogleGenAI } from "@google/genai";
 import { prompt } from "./components/Prompt";
 import "./App.css";
@@ -7,6 +7,7 @@ import ChoosingTrivia from "./components/ChoosingTrivia";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { markdownStyles, handleAnswerHover, handleAnswerLeave, formatAnswerListItem, isAnswerCorrect } from "./components/MarkdownStyling";
+import { Components } from "react-markdown";
 
 type Difficulty = {
   name: string;
@@ -14,13 +15,21 @@ type Difficulty = {
   hoverColor: string;
 };
 
+// Custom component props type
+type CustomComponentProps = {
+  node: any;
+  children?: React.ReactNode;
+  [key: string]: any;
+};
+
 function App() {
   const [gameStarted, setGameStarted] = useState<boolean>(false);
+  const [triviaLoading, setTriviaLoading] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>("");
   const [isCategorySelected, setIsCategorySelected] = useState<boolean>(false);
   const [isTriviaQuestionGenerated, setIsTriviaQuestionGenerated] = useState<boolean>(false);
-  const [triviaQuestion, setTriviaQuestion] = useState<string | undefined>("");
+  const [triviaQuestion, setTriviaQuestion] = useState<string>("");
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState<boolean>(false);
   const [userScore, setUserScore] = useState<number>(0);
@@ -38,6 +47,7 @@ function App() {
   });
 
   async function getTriviaQuestion() {
+    setTriviaLoading(true);
     setIsTriviaQuestionGenerated(true);
     setSelectedAnswer(null);
     setShowResult(false);
@@ -63,6 +73,7 @@ function App() {
       setChatHistory(newChatHistory);
       setTriviaQuestion(response.text);
       setIsTriviaQuestionGenerated(true);
+      setTriviaLoading(false);
     } catch (error) {
       console.error("Error with chat history:", error);
 
@@ -120,13 +131,13 @@ function App() {
     console.log("Selected answer:", content, isAnswerCorrect(content) ? "(CORRECT)" : "(INCORRECT)");
   };
 
-  const components = {
-    h1: ({ node, ...props }) => <h1 style={markdownStyles.h1} {...props} />,
-    h2: ({ node, ...props }) => <h2 style={markdownStyles.h2} {...props} />,
-    p: ({ node, ...props }) => <p style={markdownStyles.p} {...props} />,
-    ul: ({ node, ...props }) => <ul style={markdownStyles.ul} {...props} />,
-    ol: ({ node, ...props }) => <ol style={markdownStyles.ol} {...props} />,
-    li: ({ node, ...props }) => {
+  const components: Components = {
+    h1: ({ node, ...props }: CustomComponentProps) => <h1 style={markdownStyles.h1 as CSSProperties} {...props} />,
+    h2: ({ node, ...props }: CustomComponentProps) => <h2 style={markdownStyles.h2 as CSSProperties} {...props} />,
+    p: ({ node, ...props }: CustomComponentProps) => <p style={markdownStyles.p as CSSProperties} {...props} />,
+    ul: ({ node, ...props }: CustomComponentProps) => <ul style={markdownStyles.ul as CSSProperties} {...props} />,
+    ol: ({ node, ...props }: CustomComponentProps) => <ol style={markdownStyles.ol as CSSProperties} {...props} />,
+    li: ({ node, ...props }: CustomComponentProps) => {
       const content = props.children ? props.children.toString() : "";
       const isSelected = selectedAnswer === content;
       const isCorrect = isAnswerCorrect(content);
@@ -148,7 +159,7 @@ function App() {
             ? "1px solid rgba(239, 68, 68, 0.6)"
             : "1px solid rgba(148, 163, 184, 0.2)"
           : "1px solid rgba(148, 163, 184, 0.2)",
-      };
+      } as CSSProperties;
 
       return (
         <li
@@ -198,12 +209,15 @@ function App() {
           {isCategorySelected ? (
             <div className='text-white pt-2 px-4 h-dvh flex justify-center items-center flex-col'>
               <div className='w-full max-w-2xl bg-slate-900 p-6 rounded-lg shadow-lg border border-slate-700'>
-                {isTriviaQuestionGenerated ? (
+                {triviaLoading ? (
+                  <div className='flex justify-center items-center h-40'>
+                    <span className='text-xl'>Loading question...</span>
+                  </div>
+                ) : (
                   <>
                     <Markdown remarkPlugins={[remarkGfm]} components={components}>
                       {triviaQuestion}
                     </Markdown>
-
                     {showResult && (
                       <div className='flex justify-center mt-6'>
                         <button
@@ -216,10 +230,6 @@ function App() {
                     )}
                     <span className='underline text-lg'>Your points: {userScore}</span>
                   </>
-                ) : (
-                  <div className='flex justify-center items-center h-40'>
-                    <span className='text-xl'>Loading question...</span>
-                  </div>
                 )}
               </div>
             </div>

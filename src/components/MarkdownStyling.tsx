@@ -1,4 +1,6 @@
-export const markdownStyles = {
+import React, { CSSProperties } from "react";
+
+export const markdownStyles: Record<string, CSSProperties> = {
   h1: {
     fontSize: "1.5rem",
     fontWeight: "bold",
@@ -55,19 +57,19 @@ export const markdownStyles = {
   },
 };
 
-export const handleAnswerHover = event => {
-  event.target.style.backgroundColor = "rgba(30, 41, 59, 0.8)";
-  event.target.style.transform = "translateY(-2px)";
-  event.target.style.boxShadow = "0 4px 6px rgba(0,0,0,0.3)";
+export const handleAnswerHover = (event: React.MouseEvent<HTMLElement>) => {
+  event.currentTarget.style.backgroundColor = "rgba(30, 41, 59, 0.8)";
+  event.currentTarget.style.transform = "translateY(-2px)";
+  event.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.3)";
 };
 
-export const handleAnswerLeave = event => {
-  event.target.style.backgroundColor = "rgba(15, 23, 42, 0.6)";
-  event.target.style.transform = "translateY(0)";
-  event.target.style.boxShadow = "0 2px 4px rgba(0,0,0,0.2)";
+export const handleAnswerLeave = (event: React.MouseEvent<HTMLElement>) => {
+  event.currentTarget.style.backgroundColor = "rgba(15, 23, 42, 0.6)";
+  event.currentTarget.style.transform = "translateY(0)";
+  event.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.2)";
 };
 
-export const formatAnswerListItem = text => {
+export const formatAnswerListItem = (text: string) => {
   const isCorrect = text.includes("*");
 
   const cleanText = text.replace(/\*/g, "");
@@ -106,6 +108,6 @@ export const formatAnswerListItem = text => {
   return cleanText;
 };
 
-export const isAnswerCorrect = text => {
+export const isAnswerCorrect = (text: string) => {
   return text.includes("*");
 };

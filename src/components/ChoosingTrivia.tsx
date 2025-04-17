@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { Difficulty } from "../App";
 
 interface ChoosingTriviaProps {
   categories: string[];
-  difficulties: Difficulty[];
+  difficulties: Array<{
+    name: string;
+    color: string;
+    hoverColor: string;
+  }>;
   onSelectCategory: (category: string, difficulty: string) => void;
 }
 
@@ -37,12 +40,12 @@ const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficultie
     "Technology & Inventions": "💡",
   };
 
-  const handleCategorySelect = (category: string): void => {
+  const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
     setSelectedDifficulty(null);
   };
 
-  const handleDifficultySelect = (difficulty: string): void => {
+  const handleDifficultySelect = (difficulty: string) => {
     setSelectedDifficulty(difficulty);
     if (selectedCategory) {
       onSelectCategory(selectedCategory, difficulty);

@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactElement } from "react";
+import { useState, useEffect } from "react";
 import { GoogleGenAI } from "@google/genai";
 import { prompt } from "./components/Prompt";
 import "./App.css";
@@ -7,21 +7,20 @@ import ChoosingTrivia from "./components/ChoosingTrivia";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { markdownStyles, handleAnswerHover, handleAnswerLeave, formatAnswerListItem, isAnswerCorrect } from "./components/MarkdownStyling";
-import { Components } from "react-markdown";
 
-export type Difficulty = {
+type Difficulty = {
   name: string;
   color: string;
   hoverColor: string;
 };
 
-function App(): ReactElement {
+function App() {
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>("");
   const [isCategorySelected, setIsCategorySelected] = useState<boolean>(false);
   const [isTriviaQuestionGenerated, setIsTriviaQuestionGenerated] = useState<boolean>(false);
-  const [triviaQuestion, setTriviaQuestion] = useState<string>("");
+  const [triviaQuestion, setTriviaQuestion] = useState<string | undefined>("");
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState<boolean>(false);
   const [userScore, setUserScore] = useState<number>(0);
@@ -38,7 +37,7 @@ function App(): ReactElement {
     apiKey: import.meta.env.VITE_GOOGLE_GEMINI_API_KEY,
   });
 
-  async function getTriviaQuestion(): Promise<void> {
+  async function getTriviaQuestion() {
     setIsTriviaQuestionGenerated(true);
     setSelectedAnswer(null);
     setShowResult(false);
@@ -58,11 +57,11 @@ function App(): ReactElement {
 
       newChatHistory.push({
         role: "model",
-        parts: [{ text: response.text() }],
+        parts: [{ text: response.text }],
       });
 
       setChatHistory(newChatHistory);
-      setTriviaQuestion(response.text());
+      setTriviaQuestion(response.text);
       setIsTriviaQuestionGenerated(true);
     } catch (error) {
       console.error("Error with chat history:", error);
@@ -84,16 +83,16 @@ function App(): ReactElement {
         },
         {
           role: "model",
-          parts: [{ text: simpleResponse.text() }],
+          parts: [{ text: simpleResponse.text }],
         },
       ]);
 
-      setTriviaQuestion(simpleResponse.text());
+      setTriviaQuestion(simpleResponse.text);
       setIsTriviaQuestionGenerated(true);
     }
   }
 
-  const handleCategorySelect = (category: string, difficulty: string): void => {
+  const handleCategorySelect = (category: string, difficulty: string) => {
     setSelectedCategory(category);
     setSelectedDifficulty(difficulty);
     setIsCategorySelected(true);
@@ -106,7 +105,7 @@ function App(): ReactElement {
     }
   }, [selectedCategory, isCategorySelected]);
 
-  const handleAnswerSelection = (content: string): void => {
+  const handleAnswerSelection = (content: string) => {
     if (selectedAnswer || showResult) return;
 
     setSelectedAnswer(content);
@@ -121,19 +120,13 @@ function App(): ReactElement {
     console.log("Selected answer:", content, isAnswerCorrect(content) ? "(CORRECT)" : "(INCORRECT)");
   };
 
-  interface CustomComponentProps {
-    node: React.ReactNode;
-    children?: React.ReactNode;
-    [key: string]: any;
-  }
-
-  const components: Components = {
-    h1: ({ node, ...props }: CustomComponentProps) => <h1 style={markdownStyles.h1 as React.CSSProperties} {...props} />,
-    h2: ({ node, ...props }: CustomComponentProps) => <h2 style={markdownStyles.h2 as React.CSSProperties} {...props} />,
-    p: ({ node, ...props }: CustomComponentProps) => <p style={markdownStyles.p as React.CSSProperties} {...props} />,
-    ul: ({ node, ...props }: CustomComponentProps) => <ul style={markdownStyles.ul as React.CSSProperties} {...props} />,
-    ol: ({ node, ...props }: CustomComponentProps) => <ol style={markdownStyles.ol as React.CSSProperties} {...props} />,
-    li: ({ node, ...props }: CustomComponentProps) => {
+  const components = {
+    h1: ({ node, ...props }) => <h1 style={markdownStyles.h1} {...props} />,
+    h2: ({ node, ...props }) => <h2 style={markdownStyles.h2} {...props} />,
+    p: ({ node, ...props }) => <p style={markdownStyles.p} {...props} />,
+    ul: ({ node, ...props }) => <ul style={markdownStyles.ul} {...props} />,
+    ol: ({ node, ...props }) => <ol style={markdownStyles.ol} {...props} />,
+    li: ({ node, ...props }) => {
       const content = props.children ? props.children.toString() : "";
       const isSelected = selectedAnswer === content;
       const isCorrect = isAnswerCorrect(content);
@@ -155,7 +148,7 @@ function App(): ReactElement {
             ? "1px solid rgba(239, 68, 68, 0.6)"
             : "1px solid rgba(148, 163, 184, 0.2)"
           : "1px solid rgba(148, 163, 184, 0.2)",
-      } as React.CSSProperties;
+      };
 
       return (
         <li

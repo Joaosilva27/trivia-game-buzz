@@ -26,10 +26,10 @@ const StartGame: React.FC<StartGameProps> = ({ onStart }) => {
           PLAY NOW
         </button>
 
-        <a href='https://www.joaoportfolio.com' target='_blank' rel='noreferrer'>
+        <a href='https://www.joaoportfolio.com' target='_blank'>
           <div className='flex justify-center items-center mt-6'>
             <p className=' text-sm underline text-slate-400'>Built by João Silva</p>
-            <img src={GithubIcon} className='w-4 object-scale-down ml-1.5 animate-bounce' alt='GitHub Icon' />
+            <img src={GithubIcon} className='w-4 object-scale-down ml-1.5 animate-bounce' />
           </div>
         </a>
       </div>

@@ -1,111 +1,124 @@
-export const markdownStyles = {
+import React from "react";
+
+// Define CSS style types
+type CSSProperties = React.CSSProperties;
+
+// Export styles as objects with proper TypeScript types
+export const markdownStyles: Record<string, CSSProperties> = {
   h1: {
-    fontSize: "1.5rem",
+    fontSize: "2rem",
     fontWeight: "bold",
-    marginBottom: "2rem",
-    marginTop: "1rem",
+    marginBottom: "1rem",
+    marginTop: "0.5rem",
     textAlign: "center",
-    color: "#f3f4f6",
-    textShadow: "0 2px 4px rgba(0,0,0,0.5)",
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    letterSpacing: "0.05em",
+    color: "#ffffff",
+    textShadow: "0px 2px 4px rgba(0, 0, 0, 0.3)",
+    fontFamily: '"Poppins", sans-serif',
+    letterSpacing: "0.05rem",
   },
   h2: {
-    fontSize: "1.75rem",
+    fontSize: "1.5rem",
     fontWeight: "bold",
-    marginBottom: "1.5rem",
-    marginTop: "1.5rem",
-    color: "#93c5fd",
-    textShadow: "0 1px 2px rgba(0,0,0,0.4)",
+    marginBottom: "0.75rem",
+    marginTop: "1rem",
+    color: "#f59e0b",
   },
   p: {
-    marginBottom: "1.5rem",
-    fontSize: "1.25rem",
+    fontSize: "1.125rem",
     lineHeight: "1.6",
+    marginBottom: "1rem",
     color: "#e2e8f0",
   },
   ul: {
-    paddingLeft: "2rem",
-    marginBottom: "1.5rem",
-    listStyleType: "disc",
-  },
-  ol: {
-    paddingLeft: "0",
-    marginBottom: "2rem",
+    paddingLeft: "1.25rem",
+    marginBottom: "1rem",
     listStyleType: "none",
     display: "flex",
     flexDirection: "column",
-    gap: "1rem",
+    gap: "0.75rem",
     width: "100%",
-    maxWidth: "600px",
+    maxWidth: "100%",
+  },
+  ol: {
+    paddingLeft: "1.25rem",
+    marginBottom: "1rem",
+    listStyleType: "none",
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.75rem",
+    width: "100%",
+    maxWidth: "100%",
   },
   li: {
-    marginBottom: "0",
-    padding: "1rem 1.5rem",
     backgroundColor: "rgba(15, 23, 42, 0.6)",
+    border: "1px solid rgba(148, 163, 184, 0.2)",
+    marginBottom: "0.5rem",
+    padding: "0.75rem 1rem",
     borderRadius: "0.5rem",
-    fontSize: "1.15rem",
+    fontSize: "1.125rem",
     textAlign: "left",
     cursor: "pointer",
-    transition: "all 0.2s ease",
-    border: "1px solid rgba(148, 163, 184, 0.2)",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+    transition: "all 0.2s ease-in-out",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
     position: "relative",
-    paddingLeft: "3.5rem",
+    paddingLeft: "2.5rem",
   },
 };
 
-export const handleAnswerHover = event => {
-  event.target.style.backgroundColor = "rgba(30, 41, 59, 0.8)";
-  event.target.style.transform = "translateY(-2px)";
-  event.target.style.boxShadow = "0 4px 6px rgba(0,0,0,0.3)";
+// Helper functions with proper type annotations
+export const handleAnswerHover = (event: React.MouseEvent<HTMLLIElement>): void => {
+  const target = event.currentTarget;
+  target.style.backgroundColor = "rgba(59, 130, 246, 0.2)";
+  target.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.2)";
+  target.style.transform = "translateY(-2px)";
 };
 
-export const handleAnswerLeave = event => {
-  event.target.style.backgroundColor = "rgba(15, 23, 42, 0.6)";
-  event.target.style.transform = "translateY(0)";
-  event.target.style.boxShadow = "0 2px 4px rgba(0,0,0,0.2)";
+export const handleAnswerLeave = (event: React.MouseEvent<HTMLLIElement>): void => {
+  const target = event.currentTarget;
+  target.style.backgroundColor = "rgba(15, 23, 42, 0.6)";
+  target.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.1)";
+  target.style.transform = "translateY(0)";
 };
 
-export const formatAnswerListItem = text => {
-  const isCorrect = text.includes("*");
-
-  const cleanText = text.replace(/\*/g, "");
-
-  const match = cleanText.match(/^([A-D])\.\s/);
+export const formatAnswerListItem = (text: string): React.ReactNode => {
+  // Check if the text starts with a letter followed by a period and space
+  const isCorrect = isAnswerCorrect(text);
+  const match = text.match(/^([A-D])\.?\s(.+)$/);
 
   if (match) {
-    const letter = match[1];
-    const answerText = cleanText.replace(/^[A-D]\.\s/, "");
-
+    const [, letter, content] = match;
     return (
       <>
         <span
           style={{
-            position: "absolute",
-            left: "1rem",
-            top: "50%",
-            transform: "translateY(-50%)",
-            backgroundColor: "#6366f1",
-            color: "white",
-            width: "1.75rem",
-            height: "1.75rem",
-            display: "flex",
+            backgroundColor: "rgba(59, 130, 246, 0.3)",
+            borderRadius: "50%",
+            width: "1.5rem",
+            height: "1.5rem",
+            display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            borderRadius: "50%",
+            marginRight: "0.75rem",
+            position: "absolute",
+            left: "0.75rem",
+            top: "50%",
+            transform: "translateY(-50%)",
             fontWeight: "bold",
+            color: "white",
           }}
         >
           {letter}
         </span>
-        {answerText}
+        {content}
       </>
     );
   }
-  return cleanText;
+
+  return text;
 };
 
-export const isAnswerCorrect = text => {
-  return text.includes("*");
+export const isAnswerCorrect = (text: string): boolean => {
+  // Check if the answer text contains "✓" or "correct" case insensitive
+  const lowerText = text.toLowerCase();
+  return lowerText.includes("✓") || lowerText.includes("correct");
 };

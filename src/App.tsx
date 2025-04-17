@@ -210,8 +210,9 @@ function App() {
             <div className='text-white pt-2 px-4 h-dvh flex justify-center items-center flex-col'>
               <div className='w-full max-w-2xl bg-slate-900 p-6 rounded-lg shadow-lg border border-slate-700'>
                 {triviaLoading ? (
-                  <div className='flex justify-center items-center h-40'>
-                    <span className='text-xl'>Loading question...</span>
+                  <div className='flex flex-col items-center justify-center h-40 space-y-4'>
+                    <div className='w-12 h-12 border-4 border-indigo-500 border-t-4 border-t-transparent rounded-full animate-spin'></div>
+                    <span className='text-slate-300 text-lg font-medium'>Generating your Buzz! Trivia...</span>
                   </div>
                 ) : (
                   <>

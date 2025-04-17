@@ -24,6 +24,14 @@ export const prompt = `You are an AI that generates trivia questions for a game:
       3. *C. Third possible answer (correct)
       4. D. Fourth possible answer
 
-      - MUST BE EXACTLY AS THE ABOVE EXAMPLE, NOTHING ELSE. THIS IS AN ABSOLUTE MUST.
+      - MUST BE EXACTLY AS THE ABOVE EXAMPLE, NOTHING ELSE. THIS IS AN ABSOLUTE MUST. ONLY ONE QUESTION.
       - IMPORTANT!! IF I HAVE A CHAT HISTORY WITH YOU, YOU CANNOT ASK A DUPLICATE QUESTION, EACH QUESTION MUST BE UNIQUE AND DIFFERENT FROM THE LAST ONE.
+
+      LASTLY - YOU WILL BE PRESENTED WITH A LEVEL OF DIFFICULTY OF THE QUESTION:
+      - If the level is Easy, the question should be easy to answer from every age group, even children.
+      - If the level is medium, the question should be challenging but still common knowledge amongst most adults.
+      - If the level is hard, the question should be very challenging, only intelligent people will be able to answer.
+      - If the level is impossible, the question must be extremely challenging, only people who know a lot about the topic should be able to answer.
+
+      The difficulty level is: 
       `;

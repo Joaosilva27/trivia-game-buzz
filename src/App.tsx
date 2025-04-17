@@ -8,9 +8,16 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { markdownStyles, handleAnswerHover, handleAnswerLeave, formatAnswerListItem, isAnswerCorrect } from "./components/MarkdownStyling";
 
+type Difficulty = {
+  name: string;
+  color: string;
+  hoverColor: string;
+};
+
 function App() {
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>("");
   const [isCategorySelected, setIsCategorySelected] = useState<boolean>(false);
   const [isTriviaQuestionGenerated, setIsTriviaQuestionGenerated] = useState<boolean>(false);
   const [triviaQuestion, setTriviaQuestion] = useState<string | undefined>("");
@@ -18,6 +25,13 @@ function App() {
   const [showResult, setShowResult] = useState<boolean>(false);
   const [userScore, setUserScore] = useState<number>(0);
   const [chatHistory, setChatHistory] = useState<Array<{ role: string; parts: Array<{ text: string }> }>>([]);
+
+  const difficulties: Difficulty[] = [
+    { name: "Easy", color: "bg-green-600", hoverColor: "hover:bg-green-500" },
+    { name: "Normal", color: "bg-blue-600", hoverColor: "hover:bg-blue-500" },
+    { name: "Hard", color: "bg-orange-600", hoverColor: "hover:bg-orange-500" },
+    { name: "Impossible", color: "bg-red-600", hoverColor: "hover:bg-red-500" },
+  ];
 
   const ai = new GoogleGenAI({
     apiKey: import.meta.env.VITE_GOOGLE_GEMINI_API_KEY,
@@ -32,7 +46,7 @@ function App() {
 
     newChatHistory.push({
       role: "user",
-      parts: [{ text: prompt + " Category: " + selectedCategory }],
+      parts: [{ text: prompt + " Category: " + selectedCategory + " Difficulty: " + selectedDifficulty }],
     });
 
     try {
@@ -52,13 +66,12 @@ function App() {
     } catch (error) {
       console.error("Error with chat history:", error);
 
-      // Fallback to a simple request if there's an error
       const simpleResponse = await ai.models.generateContent({
         model: "gemini-2.0-flash",
         contents: [
           {
             role: "user",
-            parts: [{ text: prompt + " Category: " + selectedCategory }],
+            parts: [{ text: prompt + " Category: " + selectedCategory + " Difficulty: " + selectedDifficulty }],
           },
         ],
       });
@@ -66,7 +79,7 @@ function App() {
       setChatHistory([
         {
           role: "user",
-          parts: [{ text: prompt + " Category: " + selectedCategory }],
+          parts: [{ text: prompt + " Difficulty: " + selectedDifficulty + " Category: " + selectedCategory }],
         },
         {
           role: "model",
@@ -79,10 +92,11 @@ function App() {
     }
   }
 
-  const handleCategorySelect = (category: string) => {
+  const handleCategorySelect = (category: string, difficulty: string) => {
     setSelectedCategory(category);
+    setSelectedDifficulty(difficulty);
     setIsCategorySelected(true);
-    console.log("Selected category:", category);
+    console.log("Selected category:", category, "Difficulty:", difficulty);
   };
 
   useEffect(() => {
@@ -210,7 +224,7 @@ function App() {
               </div>
             </div>
           ) : (
-            <ChoosingTrivia categories={[]} onSelectCategory={handleCategorySelect} />
+            <ChoosingTrivia categories={[]} difficulties={difficulties} onSelectCategory={handleCategorySelect} />
           )}
         </div>
       ) : (

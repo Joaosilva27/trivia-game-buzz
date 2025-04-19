@@ -290,11 +290,31 @@ function App() {
                             </button>
                           </div>
                         )}
-                        <div className='flex flex-col justify-center items-center'>
-                          <span className='underline text-lg'>Your points: {userScore}</span>
+                        <div className='flex flex-col justify-center items-center mt-4'>
+                          <div className='bg-slate-800 px-6 py-3 rounded-lg border border-indigo-500/30 shadow-md shadow-indigo-500/10'>
+                            <div className='flex items-center gap-3'>
+                              <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                className='h-6 w-6 text-yellow-400'
+                                fill='none'
+                                viewBox='0 0 24 24'
+                                stroke='currentColor'
+                              >
+                                <path
+                                  strokeLinecap='round'
+                                  strokeLinejoin='round'
+                                  strokeWidth={2}
+                                  d='M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+                                />
+                              </svg>
+                              <span className='text-xl font-medium text-white'>
+                                Your Points: <span className='font-bold text-indigo-400'>{userScore}</span>
+                              </span>
+                            </div>
+                          </div>
                           <button
                             onClick={onResetGame}
-                            className='bg-gray-600 mt-2 hover:bg-gray-700 w-fit text-white font-bold py-2 px-6 rounded-lg transition-all duration-200 shadow-md'
+                            className='bg-gray-600 mt-6 hover:bg-gray-700 w-fit text-white font-bold py-2 px-6 rounded-lg transition-all duration-200 shadow-md'
                           >
                             Return to Home
                           </button>

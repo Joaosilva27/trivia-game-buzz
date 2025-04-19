@@ -32,7 +32,7 @@ function App() {
   const [triviaQuestion, setTriviaQuestion] = useState<string>("");
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState<boolean>(false);
-  const [userScore, setUserScore] = useState<number>(10);
+  const [userScore, setUserScore] = useState<number>(0);
   const [numberOfCorrectAnswers, setNumberOfCorrectAnswers] = useState(0);
   const [numberOfIncorrectAnswers, setNumberOfIncorrectAnswers] = useState(0);
   const [chatHistory, setChatHistory] = useState<Array<{ role: string; parts: Array<{ text: string }> }>>([]);
@@ -281,16 +281,24 @@ function App() {
                           {triviaQuestion}
                         </Markdown>
                         {showResult && (
-                          <div className='flex justify-center mt-6'>
+                          <div className='flex justify-center mt-6 space-x-4'>
                             <button
                               onClick={getTriviaQuestion}
-                              className='bg-indigo-600 hover:bg-indigo-700 text-white mb-2 font-bold py-2 px-6 rounded-lg transition-all duration-200 shadow-md'
+                              className='bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-200 shadow-md'
                             >
                               Next Question
                             </button>
                           </div>
                         )}
-                        <span className='underline text-lg'>Your points: {userScore}</span>
+                        <div className='flex flex-col justify-center items-center'>
+                          <span className='underline text-lg'>Your points: {userScore}</span>
+                          <button
+                            onClick={onResetGame}
+                            className='bg-gray-600 mt-2 hover:bg-gray-700 w-fit text-white font-bold py-2 px-6 rounded-lg transition-all duration-200 shadow-md'
+                          >
+                            Return to Home
+                          </button>
+                        </div>
                       </div>
                     )}
                   </>

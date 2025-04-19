@@ -33,6 +33,8 @@ function App() {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState<boolean>(false);
   const [userScore, setUserScore] = useState<number>(10);
+  const [numberOfCorrectAnswers, setNumberOfCorrectAnswers] = useState(0);
+  const [numberOfIncorrectAnswers, setNumberOfIncorrectAnswers] = useState(0);
   const [chatHistory, setChatHistory] = useState<Array<{ role: string; parts: Array<{ text: string }> }>>([]);
 
   const difficulties: Difficulty[] = [
@@ -124,11 +126,28 @@ function App() {
 
     if (isAnswerCorrect(content)) {
       setUserScore(prevScore => prevScore + 1);
+      setNumberOfCorrectAnswers(prevNumber => prevNumber + 1);
     } else if (userScore > 0) {
       setUserScore(prevScore => prevScore - 1);
+      setNumberOfIncorrectAnswers(prevNumber => prevNumber + 1);
     }
 
     console.log("Selected answer:", content, isAnswerCorrect(content) ? "(CORRECT)" : "(INCORRECT)");
+  };
+
+  const onResetGame = () => {
+    setGameStarted(false);
+    setIsCategorySelected(false);
+    setSelectedCategory("");
+    setSelectedDifficulty("");
+    setIsTriviaQuestionGenerated(false);
+    setTriviaQuestion("");
+    setSelectedAnswer(null);
+    setShowResult(false);
+    setUserScore(0);
+    setNumberOfCorrectAnswers(0);
+    setNumberOfIncorrectAnswers(0);
+    setChatHistory([]);
   };
 
   const components: Components = {
@@ -217,7 +236,45 @@ function App() {
                 ) : (
                   <>
                     {userScore >= 10 ? (
-                      <div>You won !</div>
+                      <div className='flex flex-col items-center justify-center text-center p-8 bg-blue-900/10 border-2 border-blue-500/30 rounded-2xl max-w-md mx-auto animate-[fadeIn_0.5s_ease-in-out]'>
+                        <h1 className='text-5xl font-extrabold text-sky-50 mb-6 drop-shadow-lg'>You Win!</h1>
+                        <p className='text-xl text-indigo-100 mb-6'>Congratulations on your trivia mastery!</p>
+
+                        <div className='flex justify-around w-full my-4 mb-8'>
+                          <div className='flex flex-col items-center p-4 bg-green-500/20 border border-green-500/40 rounded-xl min-w-32'>
+                            <span className='text-4xl font-bold text-green-500'>{numberOfCorrectAnswers}</span>
+                            <span className='text-sm text-gray-300'>Correct</span>
+                          </div>
+                          <div className='flex flex-col items-center p-4 bg-red-500/20 border border-red-500/40 rounded-xl min-w-32'>
+                            <span className='text-4xl font-bold text-red-500'>{numberOfIncorrectAnswers}</span>
+                            <span className='text-sm text-gray-300'>Incorrect</span>
+                          </div>
+                        </div>
+
+                        <button
+                          className='bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg active:translate-y-0 active:shadow-md'
+                          onClick={onResetGame}
+                        >
+                          Return to Home
+                        </button>
+
+                        {/* Tailwind doesn't have built-in confetti animations, so I'm copy pasting this from stackoverflow lol */}
+                        <div className='relative w-full h-full'>
+                          {[...Array(20)].map((_, i) => (
+                            <div
+                              key={i}
+                              className='absolute w-2 h-2 rounded-full animate-ping'
+                              style={{
+                                left: `${Math.random() * 100}%`,
+                                top: `${Math.random() * 100}%`,
+                                backgroundColor: ["#10b981", "#3b82f6", "#ef4444", "#f59e0b", "#8b5cf6", "#ec4899"][Math.floor(Math.random() * 6)],
+                                animationDelay: `${Math.random() * 2}s`,
+                                animationDuration: `${1 + Math.random() * 3}s`,
+                              }}
+                            />
+                          ))}
+                        </div>
+                      </div>
                     ) : (
                       <div>
                         <Markdown remarkPlugins={[remarkGfm]} components={components}>

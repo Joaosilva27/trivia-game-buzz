@@ -24,6 +24,7 @@ const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficultie
     "Entertainment",
     "Culture",
     "Technology & Inventions",
+    "Pop Culture",
   ];
 
   const displayCategories = categories?.length > 0 ? categories : allCategories;
@@ -38,6 +39,7 @@ const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficultie
     Entertainment: "🎬",
     Culture: "🎭",
     "Technology & Inventions": "💡",
+    "Pop Culture": "💅",
   };
 
   const handleCategorySelect = (category: string) => {

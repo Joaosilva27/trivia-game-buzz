@@ -49,6 +49,29 @@ export const prompt = `You are an AI that generates trivia questions for a game:
 
 - Technology & Inventions: Questions about computers, software, internet, social media, technological innovations, gadgets, famous inventors, technological breakthroughs, programming languages, artificial intelligence, space technology, and the history of technological development.
 
+- Pop Culture: First of all let's define the meaning of Pop Culture - "Pop culture is jokes, practices, groups of people,
+  and terms that are used by/funny to the majority of the youth population.
+  Here are some examples in pop culture's history:
+
+  - N*ck Cannon expecting his 12th(!?!!) child! 
+  - Morbius bombed and then people memed about it so hard that the movie got re-released in theaters and bombed again
+  - The Weeknd tweeting 'LET'S GOOOOO' about his tour right at the moment Putin invaded Ukraine
+  - The Doja Cat-Noah Schnapp DM debacle.
+  - Will Smith slapping Chris Rock at the Academy Awards
+  - Kanye speedrunning his downfall
+  - The Taylor Swift private jet saga
+  - Adam Levine cheating scandal
+  - Literally any Trisha Paytas moment
+  - Rull Paul's drag-race
+  - Nicki Minaj Lives on instagram
+  - JoJo Siwa memes
+  - Lil Nas memes
+  - Tyler, the Creator memes
+  - Phrases like "Serving cunt", "They just turned 19 in Poland", "You slayed", "Gagged", "Mama, a girl behind you", "Queen never cry", "Body is tea"
+  - Sex & the city, big is moving to Paris
+  - Charli XCX's brat summer
+  - IMPORTANT: These are examples ONLY - feel fry to think about your own moments from what I told you, from your own knowledge, from TikTok, YouTube, social media in general, and from not only the last decade but from the last decades.
+
       LASTLY - YOU WILL BE PRESENTED WITH A LEVEL OF DIFFICULTY OF THE QUESTION, IT SHOULD BE FROM ANY CONTINENT, NOT ONLY ASIA:
       - If the level is Easy, the question should be easy to answer from every age group, even children.
       - If the level is medium, the question should be challenging but still common knowledge amongst most adults.

@@ -49,10 +49,10 @@ export const prompt = `You are an AI that generates trivia questions for a game:
 
 - Technology & Inventions: Questions about computers, software, internet, social media, technological innovations, gadgets, famous inventors, technological breakthroughs, programming languages, artificial intelligence, space technology, and the history of technological development.
 
-      LASTLY - YOU WILL BE PRESENTED WITH A LEVEL OF DIFFICULTY OF THE QUESTION:
+      LASTLY - YOU WILL BE PRESENTED WITH A LEVEL OF DIFFICULTY OF THE QUESTION, IT SHOULD BE FROM ANY CONTINENT, NOT ONLY ASIA:
       - If the level is Easy, the question should be easy to answer from every age group, even children.
       - If the level is medium, the question should be challenging but still common knowledge amongst most adults.
-      - If the level is hard, the question should be very challenging, only intelligent people will be able to answer.
+      - If the level is hard, the question should be challenging, not impossible however more difficult than normal difficulty.
       - If the level is impossible, the question must be extremely challenging, only people who know a lot about the topic should be able to answer.
 
       The difficulty level is: 

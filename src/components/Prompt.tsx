@@ -49,6 +49,12 @@ export const prompt = `You are an AI that generates trivia questions for a game:
 
 - Technology & Inventions: Questions about computers, software, internet, social media, technological innovations, gadgets, famous inventors, technological breakthroughs, programming languages, artificial intelligence, space technology, and the history of technological development.
 
+- Memes: This category covers internet meme culture, including viral images, videos, catchphrases, and online phenomena.
+Questions should test knowledge of meme origins, evolutions, and cultural impact from the early 2000s to present day. 
+Include content from various platforms like Reddit, Twitter, TikTok, and classic meme websites. 
+Easy questions should cover widely recognized memes (like "Distracted Boyfriend" or "This is Fine"), while harder questions can test knowledge of more obscure or short-lived internet phenomena.
+Questions should be fun, engaging, and capture the humor inherent in meme culture.
+
 - Pop Culture: First of all let's define the meaning of Pop Culture - "Pop culture is jokes, practices, groups of people,
   and terms that are used by/funny to the majority of the youth population.
   Here are some examples in pop culture's history:

@@ -15,27 +15,20 @@ type Difficulty = {
   hoverColor: string;
 };
 
-// Custom component props type
-type CustomComponentProps = {
-  node: any;
-  children?: React.ReactNode;
-  [key: string]: any;
-};
-
 function App() {
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [triviaLoading, setTriviaLoading] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>("");
   const [isCategorySelected, setIsCategorySelected] = useState<boolean>(false);
-  const [isTriviaQuestionGenerated, setIsTriviaQuestionGenerated] = useState<boolean>(false);
-  const [triviaQuestion, setTriviaQuestion] = useState<string>("");
+  const [_isTriviaQuestionGenerated, setIsTriviaQuestionGenerated] = useState<boolean>(false);
+  const [triviaQuestion, setTriviaQuestion] = useState<string | undefined>("");
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState<boolean>(false);
   const [userScore, setUserScore] = useState<number>(0);
   const [numberOfCorrectAnswers, setNumberOfCorrectAnswers] = useState(0);
   const [numberOfIncorrectAnswers, setNumberOfIncorrectAnswers] = useState(0);
-  const [chatHistory, setChatHistory] = useState<Array<{ role: string; parts: Array<{ text: string }> }>>([]);
+  const [chatHistory, setChatHistory] = useState<Array<{ role: string | undefined; parts: Array<{ text: string | undefined }> }>>([]);
 
   const difficulties: Difficulty[] = [
     { name: "Easy", color: "bg-green-600", hoverColor: "hover:bg-green-500" },
@@ -151,13 +144,33 @@ function App() {
   };
 
   const components: Components = {
-    h1: ({ node, ...props }: CustomComponentProps) => <h1 style={markdownStyles.h1 as CSSProperties} {...props} />,
-    h2: ({ node, ...props }: CustomComponentProps) => <h2 style={markdownStyles.h2 as CSSProperties} {...props} />,
-    p: ({ node, ...props }: CustomComponentProps) => <p style={markdownStyles.p as CSSProperties} {...props} />,
-    ul: ({ node, ...props }: CustomComponentProps) => <ul style={markdownStyles.ul as CSSProperties} {...props} />,
-    ol: ({ node, ...props }: CustomComponentProps) => <ol style={markdownStyles.ol as CSSProperties} {...props} />,
-    li: ({ node, ...props }: CustomComponentProps) => {
-      const content = props.children ? props.children.toString() : "";
+    h1: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
+      <h1 style={markdownStyles.h1 as CSSProperties} {...props}>
+        {children}
+      </h1>
+    ),
+    h2: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
+      <h2 style={markdownStyles.h2 as CSSProperties} {...props}>
+        {children}
+      </h2>
+    ),
+    p: ({ children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
+      <p style={markdownStyles.p as CSSProperties} {...props}>
+        {children}
+      </p>
+    ),
+    ul: ({ children, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
+      <ul style={markdownStyles.ul as CSSProperties} {...props}>
+        {children}
+      </ul>
+    ),
+    ol: ({ children, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
+      <ol style={markdownStyles.ol as CSSProperties} {...props}>
+        {children}
+      </ol>
+    ),
+    li: ({ children, ...props }: React.HTMLAttributes<HTMLLIElement>) => {
+      const content = children ? children.toString() : "";
       const isSelected = selectedAnswer === content;
       const isCorrect = isAnswerCorrect(content);
       const showResultHighlight = showResult && (isSelected || isCorrect);
@@ -186,6 +199,7 @@ function App() {
           onMouseEnter={!showResult ? handleAnswerHover : undefined}
           onMouseLeave={!showResult ? handleAnswerLeave : undefined}
           onClick={() => handleAnswerSelection(content)}
+          {...props}
         >
           {formatAnswerListItem(content)}
           {showResult && isCorrect && (

@@ -70,8 +70,6 @@ export const handleAnswerLeave = (event: React.MouseEvent<HTMLElement>) => {
 };
 
 export const formatAnswerListItem = (text: string) => {
-  const isCorrect = text.includes("*");
-
   const cleanText = text.replace(/\*/g, "");
 
   const match = cleanText.match(/^([A-D])\.\s/);

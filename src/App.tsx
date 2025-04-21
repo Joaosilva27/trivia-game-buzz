@@ -25,7 +25,7 @@ function App() {
   const [triviaQuestion, setTriviaQuestion] = useState<string | undefined>("");
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState<boolean>(false);
-  const [userScore, setUserScore] = useState<number>(0);
+  const [userScore, setUserScore] = useState<number>(9);
   const [numberOfCorrectAnswers, setNumberOfCorrectAnswers] = useState(0);
   const [numberOfIncorrectAnswers, setNumberOfIncorrectAnswers] = useState(0);
   const [chatHistory, setChatHistory] = useState<Array<{ role: string | undefined; parts: Array<{ text: string | undefined }> }>>([]);
@@ -235,6 +235,38 @@ function App() {
     },
   };
 
+  const renderScoreMeter = () => {
+    const maxScore = 10;
+    return (
+      <div className='fixed right-6 top-1/2 transform -translate-y-1/2 flex flex-col-reverse items-center justify-between bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-lg p-3 h-96 w-20'>
+        <div className='text-center mb-1'>
+          <span className='text-indigo-400 font-bold text-lg'>{userScore}</span>
+          <span className='block text-slate-400 text-xs'>POINTS</span>
+        </div>
+
+        <div className='flex flex-col-reverse gap-1 w-full mb-2 flex-grow'>
+          {[...Array(maxScore)].map((_, index) => {
+            const isActive = userScore > index;
+            return (
+              <div
+                key={index}
+                className={`h-full flex-grow rounded ${
+                  isActive ? "bg-gradient-to-r from-indigo-500 to-indigo-400 shadow-md shadow-indigo-600/20" : "bg-slate-700/50"
+                } transition-all duration-300`}
+              />
+            );
+          })}
+        </div>
+
+        <div className='flex items-center justify-center w-full bg-slate-900/60 rounded-t-lg py-1 border-b border-indigo-500/30'>
+          <div className='flex items-center justify-center w-6 h-6 rounded-full bg-indigo-600'>
+            <span className='text-white text-xs font-bold'>{maxScore}</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div>
       {gameStarted ? (
@@ -272,7 +304,6 @@ function App() {
                           Return to Home
                         </button>
 
-                        {/* Tailwind doesn't have built-in confetti animations, so I'm copy pasting this from stackoverflow lol */}
                         <div className='relative w-full h-full'>
                           {[...Array(20)].map((_, i) => (
                             <div
@@ -304,31 +335,10 @@ function App() {
                             </button>
                           </div>
                         )}
-                        <div className='flex flex-col justify-center items-center mt-4'>
-                          <div className='bg-slate-800 px-6 py-3 rounded-lg border border-indigo-500/30 shadow-md shadow-indigo-500/10'>
-                            <div className='flex items-center gap-3'>
-                              <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                className='h-6 w-6 text-yellow-400'
-                                fill='none'
-                                viewBox='0 0 24 24'
-                                stroke='currentColor'
-                              >
-                                <path
-                                  strokeLinecap='round'
-                                  strokeLinejoin='round'
-                                  strokeWidth={2}
-                                  d='M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
-                                />
-                              </svg>
-                              <span className='text-xl font-medium text-white'>
-                                Your Points: <span className='font-bold text-indigo-400'>{userScore}</span>
-                              </span>
-                            </div>
-                          </div>
+                        <div className='flex justify-center mt-6'>
                           <button
                             onClick={onResetGame}
-                            className='bg-gray-600 mt-6 hover:bg-gray-700 w-fit text-white font-bold py-2 px-6 rounded-lg transition-all duration-200 shadow-md'
+                            className='bg-gray-600 hover:bg-gray-700 w-fit text-white font-bold py-2 px-6 rounded-lg transition-all duration-200 shadow-md'
                           >
                             Return to Home
                           </button>
@@ -338,6 +348,7 @@ function App() {
                   </>
                 )}
               </div>
+              {!triviaLoading && userScore < 10 && renderScoreMeter()}
             </div>
           ) : (
             <ChoosingTrivia categories={[]} difficulties={difficulties} onSelectCategory={handleCategorySelect} />

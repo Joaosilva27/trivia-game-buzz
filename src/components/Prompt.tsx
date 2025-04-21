@@ -71,7 +71,7 @@ Questions should be fun, engaging, and capture the humor inherent in meme cultur
   - Rull Paul's drag-race
   - Nicki Minaj Lives on instagram
   - JoJo Siwa memes
-  - Lil Nas memes
+  - Lil Nas X memes
   - Tyler, the Creator memes
   - Phrases like "Serving cunt", "They just turned 19 in Poland", "You slayed", "Gagged", "Mama, a girl behind you", "Queen never cry", "Body is tea"
   - Sex & the city, big is moving to Paris

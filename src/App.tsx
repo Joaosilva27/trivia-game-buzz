@@ -8,6 +8,7 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { markdownStyles, handleAnswerHover, handleAnswerLeave, formatAnswerListItem, isAnswerCorrect } from "./components/MarkdownStyling";
 import { Components } from "react-markdown";
+import axios from "axios";
 
 type Difficulty = {
   name: string;
@@ -26,6 +27,7 @@ function App() {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState<boolean>(false);
   const [userScore, setUserScore] = useState<number>(0);
+  const [funFact, setFunFact] = useState<Promise<any>>();
   const [numberOfCorrectAnswers, setNumberOfCorrectAnswers] = useState(0);
   const [numberOfIncorrectAnswers, setNumberOfIncorrectAnswers] = useState(0);
   const [chatHistory, setChatHistory] = useState<Array<{ role: string | undefined; parts: Array<{ text: string | undefined }> }>>([]);
@@ -42,6 +44,8 @@ function App() {
   });
 
   async function getTriviaQuestion() {
+    fetchFunFact();
+
     setTriviaLoading(true);
     setIsTriviaQuestionGenerated(true);
     setSelectedAnswer(null);
@@ -68,6 +72,7 @@ function App() {
       setChatHistory(newChatHistory);
       setTriviaQuestion(response.text);
       setIsTriviaQuestionGenerated(true);
+      // setTriviaLoading(false);
     } catch (error) {
       console.error("Error with chat history:", error);
 
@@ -271,6 +276,18 @@ function App() {
     );
   };
 
+  const fetchFunFact = async () => {
+    try {
+      const funFact = await axios.get("https://uselessfacts.jsph.pl/api/v2/facts/random").then(res => res.data);
+
+      setFunFact(funFact.text);
+
+      console.log(funFact.text);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
       {gameStarted ? (
@@ -280,12 +297,13 @@ function App() {
               <div className='w-full max-w-2xl bg-slate-900 p-6 rounded-lg shadow-lg border border-slate-700'>
                 {triviaLoading ? (
                   <div className='flex flex-col items-center justify-center h-40 space-y-4'>
+                    <span>Fun fact: {funFact}</span>
                     <img
                       className='w-12 animate-spin'
                       style={{ animationDuration: "5000ms" }}
                       src='https://games-we-played.myshopify.com/cdn/shop/products/57_a4e484dc-f7ae-4182-980b-2e7242316819_800x.png?v=1688414566'
                     />
-                    <span className='text-slate-300 text-lg font-medium'>Generating your Buzz! Trivia...</span>
+                    <span className='text-slate-300 text-xs font-medium'>Generating your Buzz! Trivia...</span>
                   </div>
                 ) : (
                   <>

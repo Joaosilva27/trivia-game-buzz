@@ -68,7 +68,6 @@ function App() {
       setChatHistory(newChatHistory);
       setTriviaQuestion(response.text);
       setIsTriviaQuestionGenerated(true);
-      setTriviaLoading(false);
     } catch (error) {
       console.error("Error with chat history:", error);
 
@@ -281,7 +280,11 @@ function App() {
               <div className='w-full max-w-2xl bg-slate-900 p-6 rounded-lg shadow-lg border border-slate-700'>
                 {triviaLoading ? (
                   <div className='flex flex-col items-center justify-center h-40 space-y-4'>
-                    <div className='w-12 h-12 border-4 border-indigo-500 border-t-4 border-t-transparent rounded-full animate-spin'></div>
+                    <img
+                      className='w-12 animate-spin'
+                      style={{ animationDuration: "5000ms" }}
+                      src='https://games-we-played.myshopify.com/cdn/shop/products/57_a4e484dc-f7ae-4182-980b-2e7242316819_800x.png?v=1688414566'
+                    />
                     <span className='text-slate-300 text-lg font-medium'>Generating your Buzz! Trivia...</span>
                   </div>
                 ) : (

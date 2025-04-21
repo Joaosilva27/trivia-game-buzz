@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import BuzzLogo from "../images/BuzzLogo.png";
 
 interface ChoosingTriviaProps {
   categories: string[];
@@ -41,7 +42,7 @@ const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficultie
     Culture: "🎭",
     "Technology & Inventions": "💡",
     "Pop Culture": "💅",
-    Memes: "🤣",
+    Memes: "💀",
   };
 
   const handleCategorySelect = (category: string) => {
@@ -59,10 +60,11 @@ const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficultie
   return (
     <div className='flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-800 to-slate-900'>
       <div className='w-full max-w-3xl px-6 py-10 text-center'>
-        <h1 className='mb-10 text-4xl font-bold text-white'>
-          SELECT CATEGORY
-          <span className='block mt-2 text-xl font-medium text-amber-400'>Choose your Buzz! trivia topic</span>
-        </h1>
+        <div className='flex justify-center flex-row mt-2 mb-10'>
+          <span className='block mt-2 text-3xl font-medium text-amber-400'>Choose your</span>
+          <img src={BuzzLogo} className='w-15 ml-2.5 mr-3' />
+          <span className='block mt-2 text-3xl font-medium text-amber-400'>Trivia topic:</span>
+        </div>
 
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
           {displayCategories.map(category => (
@@ -99,14 +101,6 @@ const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficultie
             </div>
           </>
         )}
-
-        <p className='mt-8 text-sm text-slate-400'>
-          {!selectedCategory
-            ? "Select a category to begin Buzzing!"
-            : selectedDifficulty
-            ? `Ready to play ${selectedCategory} trivia on ${selectedDifficulty} difficulty!`
-            : "Now select a difficulty level"}
-        </p>
       </div>
     </div>
   );

@@ -25,7 +25,7 @@ function App() {
   const [triviaQuestion, setTriviaQuestion] = useState<string | undefined>("");
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState<boolean>(false);
-  const [userScore, setUserScore] = useState<number>(9);
+  const [userScore, setUserScore] = useState<number>(0);
   const [numberOfCorrectAnswers, setNumberOfCorrectAnswers] = useState(0);
   const [numberOfIncorrectAnswers, setNumberOfIncorrectAnswers] = useState(0);
   const [chatHistory, setChatHistory] = useState<Array<{ role: string | undefined; parts: Array<{ text: string | undefined }> }>>([]);
@@ -238,7 +238,12 @@ function App() {
   const renderScoreMeter = () => {
     const maxScore = 10;
     return (
-      <div className='fixed right-6 top-1/2 transform -translate-y-1/2 flex flex-col-reverse items-center justify-between bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-lg p-3 h-96 w-20'>
+      <div className='fixed right-6 top-1/2 transform -translate-y-1/2 flex flex-col-reverse items-center justify-between bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-lg p-3 h-120 w-20'>
+        <img
+          className='w-30'
+          src='https://games-we-played.myshopify.com/cdn/shop/products/57_a4e484dc-f7ae-4182-980b-2e7242316819_800x.png?v=1688414566'
+        />
+
         <div className='text-center mb-1'>
           <span className='text-indigo-400 font-bold text-lg'>{userScore}</span>
           <span className='block text-slate-400 text-xs'>POINTS</span>
@@ -348,6 +353,7 @@ function App() {
                   </>
                 )}
               </div>
+
               {!triviaLoading && userScore < 10 && renderScoreMeter()}
             </div>
           ) : (

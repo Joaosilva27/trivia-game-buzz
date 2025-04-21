@@ -72,7 +72,7 @@ function App() {
       setChatHistory(newChatHistory);
       setTriviaQuestion(response.text);
       setIsTriviaQuestionGenerated(true);
-      // setTriviaLoading(false);
+      setTriviaLoading(false);
     } catch (error) {
       console.error("Error with chat history:", error);
 
@@ -294,16 +294,21 @@ function App() {
         <div className='bg-gradient-to-br from-slate-800 to-slate-900 h-dvh'>
           {isCategorySelected ? (
             <div className='text-white pt-2 px-4 h-dvh flex justify-center items-center flex-col flex-wrap'>
-              <div className='w-full max-w-2xl bg-slate-900 p-6 rounded-lg shadow-lg border border-slate-700'>
+              <div className='w-full max-w-2xl bg-slate-900 p-6 rounded-lg shadow-lg border border-slate-700 min-h-auto'>
                 {triviaLoading ? (
-                  <div className='flex flex-col items-center justify-center h-40 space-y-4'>
-                    <span>Fun fact: {funFact}</span>
+                  <div className='flex flex-col items-center justify-center space-y-4'>
+                    {funFact && (
+                      <div className='bg-indigo-900/50 border border-indigo-500/30 rounded-lg p-3 max-w-xs text-center mx-auto'>
+                        <div className='text-yellow-300 text-xs uppercase font-bold mb-1'>Fun Fact</div>
+                        <span className='text-slate-200 text-sm italic'>{funFact}</span>
+                      </div>
+                    )}
                     <img
                       className='w-12 animate-spin'
                       style={{ animationDuration: "5000ms" }}
                       src='https://games-we-played.myshopify.com/cdn/shop/products/57_a4e484dc-f7ae-4182-980b-2e7242316819_800x.png?v=1688414566'
                     />
-                    <span className='text-slate-300 text-xs font-medium'>Generating your Buzz! Trivia...</span>
+                    <span className='text-slate-300 text-xs font-medium animate-pulse'>Generating your Buzz! Trivia...</span>
                   </div>
                 ) : (
                   <>

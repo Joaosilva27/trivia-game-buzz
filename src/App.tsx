@@ -238,18 +238,18 @@ function App() {
   const renderScoreMeter = () => {
     const maxScore = 10;
     return (
-      <div className='fixed right-6 top-1/2 transform -translate-y-1/2 flex flex-col-reverse items-center justify-between bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-lg p-3 h-120 w-20'>
+      <div className='fixed sm:bottom-4 md:right-0 lg:right-35 xl:right-80 sm:right-6 top-1/2 transform -translate-y-1/2 flex flex-col-reverse items-center justify-between bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-lg p-3 h-120 w-20 max-sm:relative max-sm:top-0 max-sm:transform-none max-sm:mt-6 max-sm:mx-auto max-sm:h-20 max-sm:w-full max-sm:flex-row-reverse'>
         <img
-          className='w-30'
+          className='w-30 max-sm:w-16 max-sm:h-16'
           src='https://games-we-played.myshopify.com/cdn/shop/products/57_a4e484dc-f7ae-4182-980b-2e7242316819_800x.png?v=1688414566'
         />
 
-        <div className='text-center mb-1'>
+        <div className='text-center mb-1 max-sm:mb-0 max-sm:mx-3'>
           <span className='text-indigo-400 font-bold text-lg'>{userScore}</span>
           <span className='block text-slate-400 text-xs'>POINTS</span>
         </div>
 
-        <div className='flex flex-col-reverse gap-1 w-full mb-2 flex-grow'>
+        <div className='flex flex-col-reverse gap-1 w-full mb-2 flex-grow max-sm:flex-row max-sm:mb-0 max-sm:mx-2 max-sm:h-full'>
           {[...Array(maxScore)].map((_, index) => {
             const isActive = userScore > index;
             return (
@@ -257,13 +257,13 @@ function App() {
                 key={index}
                 className={`h-full flex-grow rounded ${
                   isActive ? "bg-gradient-to-r from-indigo-500 to-indigo-400 shadow-md shadow-indigo-600/20" : "bg-slate-700/50"
-                } transition-all duration-300`}
+                } transition-all duration-300 max-sm:w-full max-sm:h-8`}
               />
             );
           })}
         </div>
 
-        <div className='flex items-center justify-center w-full bg-slate-900/60 rounded-t-lg py-1 border-b border-indigo-500/30'>
+        <div className='flex items-center justify-center w-full bg-slate-900/60 rounded-t-lg py-1 border-b border-indigo-500/30 max-sm:rounded-l-lg max-sm:rounded-tr-none max-sm:h-full max-sm:border-r max-sm:border-b-0 max-sm:py-0'>
           <div className='flex items-center justify-center w-6 h-6 rounded-full bg-indigo-600'>
             <span className='text-white text-xs font-bold'>{maxScore}</span>
           </div>
@@ -277,7 +277,7 @@ function App() {
       {gameStarted ? (
         <div className='bg-gradient-to-br from-slate-800 to-slate-900 h-dvh'>
           {isCategorySelected ? (
-            <div className='text-white pt-2 px-4 h-dvh flex justify-center items-center flex-col'>
+            <div className='text-white pt-2 px-4 h-dvh flex justify-center items-center flex-col flex-wrap'>
               <div className='w-full max-w-2xl bg-slate-900 p-6 rounded-lg shadow-lg border border-slate-700'>
                 {triviaLoading ? (
                   <div className='flex flex-col items-center justify-center h-40 space-y-4'>

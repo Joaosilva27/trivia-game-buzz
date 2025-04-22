@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BuzzLogo from "../images/BuzzLogo.png";
 
 interface ChoosingTriviaProps {
@@ -9,11 +9,14 @@ interface ChoosingTriviaProps {
     hoverColor: string;
   }>;
   onSelectCategory: (category: string, difficulty: string) => void;
+  customTrivia: string;
+  onCustomTriviaChange: (value: string) => void;
 }
 
-const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficulties, onSelectCategory }) => {
+const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficulties, onSelectCategory, customTrivia, onCustomTriviaChange }) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
+  const [selectedCustom, setSelectedCustom] = useState<string>("");
 
   const allCategories = [
     "General",
@@ -27,6 +30,7 @@ const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficultie
     "Technology & Inventions",
     "Pop Culture",
     "Memes",
+    customTrivia,
   ];
 
   const displayCategories = categories?.length > 0 ? categories : allCategories;
@@ -43,6 +47,7 @@ const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficultie
     "Technology & Inventions": "💡",
     "Pop Culture": "💅",
     Memes: "💀",
+    Custom: "🔮",
   };
 
   const handleCategorySelect = (category: string) => {
@@ -64,6 +69,15 @@ const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficultie
           <span className='block mt-2 text-3xl font-medium text-amber-400'>Choose your</span>
           <img src={BuzzLogo} className='w-15 ml-2.5 mr-3' />
           <span className='block mt-2 text-3xl font-medium text-amber-400'>Trivia topic:</span>
+        </div>
+
+        <div className='mb-3'>
+          <span className='text-white'>If you wish to choose your own custom Trivia topic, type it here:</span>
+          <input
+            value={customTrivia}
+            onChange={e => onCustomTriviaChange(e.target.value)}
+            className='border-white border-1 text-white rounded-lg ml-1.5 border-solid'
+          />
         </div>
 
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>

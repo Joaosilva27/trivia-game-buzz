@@ -31,6 +31,7 @@ function App() {
   const [numberOfCorrectAnswers, setNumberOfCorrectAnswers] = useState(0);
   const [numberOfIncorrectAnswers, setNumberOfIncorrectAnswers] = useState(0);
   const [chatHistory, setChatHistory] = useState<Array<{ role: string | undefined; parts: Array<{ text: string | undefined }> }>>([]);
+  const [customTrivia, setCustomTrivia] = useState<string>("");
 
   const difficulties: Difficulty[] = [
     { name: "Easy", color: "bg-green-600", hoverColor: "hover:bg-green-500" },
@@ -107,6 +108,10 @@ function App() {
     setSelectedDifficulty(difficulty);
     setIsCategorySelected(true);
     console.log("Selected category:", category, "Difficulty:", difficulty);
+  };
+
+  const handleCustomTriviaChange = (value: string) => {
+    setCustomTrivia(value);
   };
 
   useEffect(() => {
@@ -383,7 +388,13 @@ function App() {
               {!triviaLoading && userScore < 10 && renderScoreMeter()}
             </div>
           ) : (
-            <ChoosingTrivia categories={[]} difficulties={difficulties} onSelectCategory={handleCategorySelect} />
+            <ChoosingTrivia
+              categories={[]}
+              difficulties={difficulties}
+              onSelectCategory={handleCategorySelect}
+              customTrivia={customTrivia}
+              onCustomTriviaChange={handleCustomTriviaChange}
+            />
           )}
         </div>
       ) : (

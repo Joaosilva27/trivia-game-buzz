@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import BuzzLogo from "../images/BuzzLogo.png";
 
 interface ChoosingTriviaProps {
@@ -16,7 +16,6 @@ interface ChoosingTriviaProps {
 const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficulties, onSelectCategory, customTrivia, onCustomTriviaChange }) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
-  const [selectedCustom, setSelectedCustom] = useState<string>("");
 
   const allCategories = [
     "General",

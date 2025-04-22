@@ -74,7 +74,7 @@ const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficultie
             <button
               key={category}
               onClick={() => handleCategorySelect(category)}
-              className={`flex items-center justify-center p-4 text-xl font-medium text-white rounded-lg transition-all duration-300 transform hover:-translate-y-1 group ${
+              className={`flex items-center truncate justify-center text-wrap p-4 text-xl font-medium text-white rounded-lg transition-all duration-300 transform hover:-translate-y-1 group ${
                 selectedCategory === category
                   ? "bg-amber-500 text-slate-900 shadow-lg shadow-amber-400/30"
                   : "bg-slate-700 hover:bg-amber-500 hover:text-slate-900 hover:shadow-lg hover:shadow-amber-400/30"
@@ -94,7 +94,7 @@ const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficultie
             value={customTrivia}
             onChange={e => onCustomTriviaChange(e.target.value)}
             placeholder='Enter custom topic here...'
-            className='w-full px-4 py-3 bg-slate-800 text-white rounded-lg border-2 border-amber-400/50 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 focus:outline-none transition-all duration-300 text-center text-lg placeholder-slate-400'
+            className='w-full px-4 py-3 bg-slate-800 truncate text-white rounded-lg border-2 border-amber-400/50 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 focus:outline-none transition-all duration-300 text-center text-lg placeholder-slate-400'
           />
         </div>
 

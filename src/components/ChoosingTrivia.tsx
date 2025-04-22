@@ -46,7 +46,6 @@ const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficultie
     "Technology & Inventions": "💡",
     "Pop Culture": "💅",
     Memes: "💀",
-    Custom: "🔮",
   };
 
   const handleCategorySelect = (category: string) => {
@@ -70,15 +69,6 @@ const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficultie
           <span className='block mt-2 text-3xl font-medium text-amber-400'>Trivia topic:</span>
         </div>
 
-        <div className='mb-3'>
-          <span className='text-white'>If you wish to choose your own custom Trivia topic, type it here:</span>
-          <input
-            value={customTrivia}
-            onChange={e => onCustomTriviaChange(e.target.value)}
-            className='border-white border-1 text-white rounded-lg ml-1.5 border-solid'
-          />
-        </div>
-
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
           {displayCategories.map(category => (
             <button
@@ -90,10 +80,22 @@ const ChoosingTrivia: React.FC<ChoosingTriviaProps> = ({ categories, difficultie
                   : "bg-slate-700 hover:bg-amber-500 hover:text-slate-900 hover:shadow-lg hover:shadow-amber-400/30"
               }`}
             >
-              <span className='mr-3 text-2xl group-hover:scale-125 transition-transform duration-300'>{categoryIcons[category] || "🎯"}</span>
+              <span className='mr-3 text-2xl group-hover:scale-125 transition-transform duration-300'>{categoryIcons[category] || "🔮"}</span>
               {category}
             </button>
           ))}
+        </div>
+
+        <div className='mb-8 mt-8 bg-slate-700/50 p-6 rounded-xl shadow-lg backdrop-blur-sm border border-slate-600'>
+          <label className='block text-lg text-amber-300 font-medium mb-3'>
+            🔮 Don't see your preferred topic? Create your own custom trivia (optional):
+          </label>
+          <input
+            value={customTrivia}
+            onChange={e => onCustomTriviaChange(e.target.value)}
+            placeholder='Enter custom topic here...'
+            className='w-full px-4 py-3 bg-slate-800 text-white rounded-lg border-2 border-amber-400/50 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 focus:outline-none transition-all duration-300 text-center text-lg placeholder-slate-400'
+          />
         </div>
 
         {selectedCategory && (

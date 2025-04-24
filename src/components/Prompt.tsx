@@ -78,6 +78,9 @@ Questions should be fun, engaging, and capture the humor inherent in meme cultur
   - Charli XCX's brat summer
   - IMPORTANT: These are examples ONLY - feel fry to think about your own moments from what I told you, from your own knowledge, from TikTok, YouTube, social media in general, and from not only the last decade but from the last decades.
 
+
+  ALSO VERY IMPORTANT: At the end of your prompt, provide a text starting with two slashes like this: "//" (without quotes) explaining the correct answer.
+
       LASTLY - YOU WILL BE PRESENTED WITH A LEVEL OF DIFFICULTY OF THE QUESTION, IT SHOULD BE FROM ANY CONTINENT, NOT ONLY ASIA:
       - If the level is Easy, the question should be easy to answer from every age group, even children.
       - If the level is medium, the question should be challenging but still common knowledge amongst most adults.

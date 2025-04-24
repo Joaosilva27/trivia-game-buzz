@@ -24,6 +24,7 @@ function App() {
   const [isCategorySelected, setIsCategorySelected] = useState<boolean>(false);
   const [_isTriviaQuestionGenerated, setIsTriviaQuestionGenerated] = useState<boolean>(false);
   const [triviaQuestion, setTriviaQuestion] = useState<string | undefined>("");
+  const [explanation, setExplanation] = useState<string | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState<boolean>(false);
   const [userScore, setUserScore] = useState<number>(0);
@@ -51,6 +52,7 @@ function App() {
     setIsTriviaQuestionGenerated(true);
     setSelectedAnswer(null);
     setShowResult(false);
+    setExplanation(null);
 
     const newChatHistory = [...chatHistory];
 
@@ -65,13 +67,27 @@ function App() {
         contents: newChatHistory,
       });
 
+      const responseText = response.text;
+      let questionPart = responseText;
+      let explanationPart = null;
+
+      // finding the explanation that starts with //
+      const explanationMatch = responseText?.match(/\/\/(.*?)$/s);
+      if (explanationMatch) {
+        // removing the explanation from the question text
+        questionPart = responseText?.replace(/\/\/.*?$/s, "").trim();
+        // storing the explanation (without the //)
+        explanationPart = explanationMatch[1].trim();
+      }
+
       newChatHistory.push({
         role: "model",
-        parts: [{ text: response.text }],
+        parts: [{ text: responseText }],
       });
 
       setChatHistory(newChatHistory);
-      setTriviaQuestion(response.text);
+      setTriviaQuestion(questionPart);
+      setExplanation(explanationPart);
       setIsTriviaQuestionGenerated(true);
       setTriviaLoading(false);
     } catch (error) {
@@ -87,6 +103,16 @@ function App() {
         ],
       });
 
+      const responseText = simpleResponse.text;
+      let questionPart = responseText;
+      let explanationPart = null;
+
+      const explanationMatch = responseText?.match(/\/\/(.*?)$/s);
+      if (explanationMatch) {
+        questionPart = responseText?.replace(/\/\/.*?$/s, "").trim();
+        explanationPart = explanationMatch[1].trim();
+      }
+
       setChatHistory([
         {
           role: "user",
@@ -94,12 +120,14 @@ function App() {
         },
         {
           role: "model",
-          parts: [{ text: simpleResponse.text }],
+          parts: [{ text: responseText }],
         },
       ]);
 
-      setTriviaQuestion(simpleResponse.text);
+      setTriviaQuestion(questionPart);
+      setExplanation(explanationPart);
       setIsTriviaQuestionGenerated(true);
+      setTriviaLoading(false);
     }
   }
 
@@ -146,6 +174,7 @@ function App() {
     setTriviaQuestion("");
     setSelectedAnswer(null);
     setShowResult(false);
+    setExplanation(null);
     setUserScore(0);
     setNumberOfCorrectAnswers(0);
     setNumberOfIncorrectAnswers(0);
@@ -361,6 +390,14 @@ function App() {
                         <Markdown remarkPlugins={[remarkGfm]} components={components}>
                           {triviaQuestion}
                         </Markdown>
+
+                        {showResult && explanation && (
+                          <div className='mt-4 p-3 bg-indigo-900/50 border border-indigo-500/30 rounded-lg'>
+                            <div className='text-yellow-300 text-xs uppercase font-bold mb-1'>Explanation</div>
+                            <p className='text-slate-200'>{explanation}</p>
+                          </div>
+                        )}
+
                         {showResult && (
                           <div className='flex justify-center mt-6 space-x-4'>
                             <button

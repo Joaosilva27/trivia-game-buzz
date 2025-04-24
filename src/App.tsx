@@ -325,10 +325,10 @@ function App() {
   return (
     <div>
       {gameStarted ? (
-        <div className='bg-gradient-to-br from-slate-800 to-slate-900 h-dvh'>
+        <div className='bg-gradient-to-br from-slate-800 to-slate-900 min-h-dvh'>
           {isCategorySelected ? (
-            <div className='text-white pt-2 px-4 h-dvh flex justify-center items-center flex-col flex-wrap'>
-              <div className='w-full max-w-2xl bg-slate-900 p-6 rounded-lg shadow-lg border border-slate-700 min-h-auto'>
+            <div className='text-white pt-2 px-4 min-h-dvh flex justify-center items-center flex-col flex-wrap'>
+              <div className='w-full max-w-2xl bg-slate-900 p-6 rounded-lg shadow-lg border border-slate-700 my-8'>
                 {triviaLoading ? (
                   <div className='flex flex-col items-center justify-center space-y-4'>
                     {funFact && (
@@ -386,15 +386,15 @@ function App() {
                         </div>
                       </div>
                     ) : (
-                      <div>
+                      <div className='space-y-4'>
                         <Markdown remarkPlugins={[remarkGfm]} components={components}>
                           {triviaQuestion}
                         </Markdown>
 
                         {showResult && explanation && (
-                          <div className='mt-4 p-3 bg-indigo-900/50 border border-indigo-500/30 rounded-lg'>
-                            <div className='text-yellow-300 text-xs uppercase font-bold mb-1'>Explanation</div>
-                            <p className='text-slate-200'>{explanation}</p>
+                          <div className='mt-6 p-4 bg-indigo-900/50 border border-indigo-500/30 rounded-lg max-h-60 overflow-y-auto'>
+                            <div className='text-yellow-300 text-xs uppercase font-bold mb-2'>Explanation</div>
+                            <p className='text-slate-200 leading-relaxed'>{explanation}</p>
                           </div>
                         )}
 
